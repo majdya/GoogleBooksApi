@@ -1,0 +1,161 @@
+<br>
+<div class="container jumbotron ">
+  <h2>Books Finder</h2>
+  <!--Search Bar and Button-->
+  <div class="input-group md-3">
+    <input #search class="form-control" placeholder="Title or Author" value="">
+    <div class="input-group-append">
+      <button id="btn" class="btn btn-outline-primary" (click)="onSearch(search.value);enableAdd()"> Search </button>
+    </div>
+  </div>
+  <br>
+  <!-- Add Book Button -->
+  <button *ngIf="addEnabeld" class="btn btn-outline-success" data-toggle="modal" data-target="#addBookModal"> Add new
+    Book
+  </button>
+</div>
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new Book</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <label>Book Title:</label>
+            <br>
+            <label>Book Published Date:</label>
+            <br>
+            <label>Book Authors:</label>
+          </div>
+          <br>
+          <div class="col-sm">
+            <input #newTitle type="text" placeholder=" Title" value="">
+            <input #newPBdate type="text" placeholder=" Published Date" value="">
+            <br>
+            <input #newAuthors type="text" placeholder="Authors" value="">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal" (click)="onAdd(newTitle.value,newPBdate.value,newAuthors.value)">Add
+          Book</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Book Details Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Book Detailes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <label>Edite Title:</label>
+            <br>
+            <label>Edite Published Date:</label>
+            <br>
+            <label>Edite Authors:</label>
+          </div>
+          <br>
+          <div class="col-sm">
+
+
+
+
+
+            <input #editedTitle type="text" placeholder=" Title" value="" required>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <input #editedPBdate type="text" placeholder=" Published Date" value="" />
+            <br>
+            <input #editedAuthors type="text" placeholder="Authors" value="" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal" (click)="onEdit(editedTitle.value,editedPBdate.value,editedAuthors.value)">Save
+          changes</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Delete Book Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">This Book Will be Removed!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" name="deleteBook" class="btn btn-outline-danger" data-dismiss="modal" (click)="onDelete()">OK,
+          Remove</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="addEnabeld" class="container jumbotron ">
+  <div class="container" *ngFor="let book of booksArr; let i = index">
+    <div class="row">
+      <div class="col">
+        <h6 #currentTitele>Book Title: {{book.title | engpipe| titlecase}}</h6>
+        <!-- <h6 #currentId>Book Id: {{book.id}} {{i}}</h6>  -->
+        <h6 #currentAuthors>Book Authors: {{ book.authors }}</h6>
+        <h6 #currentPBDate>Published Date: {{ book.publishedDate }}</h6>
+        <br>
+
+        <!-- Button trigger Edit modal -->
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal" (click)="currentBook(book)">Edit
+          Book
+        </button>
+
+        <!-- Button trigger Delete Modal -->
+        <button type="button" id="delModal" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal"
+          (click)="currentBook(book)"> Delete
+          Book
+        </button>
+      </div>
+
+      <!-- Thumbnail-->
+      <div *ngIf="!hasThum" class="col">
+        <img src="{{book.thumb}}" alt="img">
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
